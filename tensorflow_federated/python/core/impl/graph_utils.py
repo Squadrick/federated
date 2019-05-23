@@ -327,6 +327,9 @@ def stamp_parameter_in_graph(parameter_name, parameter_type, graph):
     # The parameter_type could be a NamedTupleTypeWithPyContainer, however, we
     # ignore that for now. Instead, the proper containers will be inserted at
     # call time by function_utils.wrap_as_zero_or_one_arg_callable.
+    if not parameter_type:
+      # Stamps dummy element to "populate" graph.
+      dummy_tensor = tf.constant([])
     element_name_value_pairs = []
     element_bindings = []
     for e in anonymous_tuple.to_elements(parameter_type):
